@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.quarkus.sample.super-heroes</groupId>
   <artifactId>rest-fights</artifactId>
@@ -15,10 +17,10 @@
     <pact.version>4.4.5</pact.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.core.version>2.13.5.Final-redhat-00003</quarkus.core.version>
+    <quarkus.core.version>2.13.7.Final-redhat-00003</quarkus.core.version>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.13.5.SP1-redhat-00002</quarkus.platform.version>
+    <quarkus.platform.version>2.13.7.Final-redhat-00003</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <wiremock.version>2.35.0</wiremock.version>
   </properties>
@@ -301,37 +303,37 @@
         </executions>
       </plugin>
 
-           <plugin>
-  <groupId>org.eclipse.jkube</groupId>
-  <artifactId>openshift-maven-plugin</artifactId>
-  <version>1.11.0</version>
-  <configuration>
-    <remoteDevelopment>
-      <localServices>
-        <localService>
-          <serviceName>rest-fights</serviceName>
-          <port>8082</port>
-        </localService>
-      </localServices>
-      <remoteServices>
-         <remoteService>
-          <hostname>rest-heroes</hostname>
-          <port>80</port>
-          <localPort>8083</localPort>
-        </remoteService>
-        <remoteService>
-          <hostname>rest-villains</hostname>
-          <port>80</port>
-          <localPort>8084</localPort>
-        </remoteService>
-        <remoteService>
-          <hostname>otel-collector</hostname>
-          <port>4317</port>
-        </remoteService>
-      </remoteServices>
-    </remoteDevelopment>
-  </configuration>
-</plugin>
+      <plugin>
+        <groupId>org.eclipse.jkube</groupId>
+        <artifactId>openshift-maven-plugin</artifactId>
+        <version>1.11.0</version>
+        <configuration>
+          <remoteDevelopment>
+            <localServices>
+              <localService>
+                <serviceName>rest-fights</serviceName>
+                <port>8082</port>
+              </localService>
+            </localServices>
+            <remoteServices>
+              <remoteService>
+                <hostname>rest-heroes</hostname>
+                <port>80</port>
+                <localPort>8083</localPort>
+              </remoteService>
+              <remoteService>
+                <hostname>rest-villains</hostname>
+                <port>80</port>
+                <localPort>8084</localPort>
+              </remoteService>
+              <remoteService>
+                <hostname>otel-collector</hostname>
+                <port>4317</port>
+              </remoteService>
+            </remoteServices>
+          </remoteDevelopment>
+        </configuration>
+      </plugin>
 
 
     </plugins>

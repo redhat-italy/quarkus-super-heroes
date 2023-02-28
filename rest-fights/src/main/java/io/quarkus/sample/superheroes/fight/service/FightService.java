@@ -10,6 +10,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import io.quarkus.sample.superheroes.fight.client.HeroProxy;
+
+import io.quarkus.sample.superheroes.fight.client.VillainProxy;
+
 import org.bson.types.ObjectId;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -33,6 +37,7 @@ import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.reactive.messaging.MutinyEmitter;
 import io.smallrye.reactive.messaging.TracingMetadata;
+
 
 /**
  * Business logic for the Fight service
@@ -90,8 +95,10 @@ public class FightService {
     var villain = findRandomVillain()
       .onItem().ifNull().continueWith(this::createFallbackVillain);
 
-		var hero = findRandomHero()
+	var hero = findRandomHero()
       .onItem().ifNull().continueWith(this::createFallbackHero);
+
+	/* var hero = Uni.createFrom().item(createFallbackUnbreakableHero()); */
 
 		return addDelay(Uni.combine()
 			.all()
@@ -113,7 +120,7 @@ public class FightService {
 	Uni<Villain> findRandomVillain() {
     Log.debug("Finding a random villain");
 		return this.villainClient.findRandomVillain()
-			.invoke(villain -> Log.debugf("Got random villain: %s", villain));
+			.invoke(villain -> Log.infof("Got random villain: %s", villain));
 	}
 
   @Timeout(value = 5, unit = ChronoUnit.SECONDS)
@@ -158,6 +165,19 @@ public class FightService {
 		return new Hero(
 			this.fightConfig.hero().fallback().name(),
 			this.fightConfig.hero().fallback().level(),
+			this.fightConfig.hero().fallback().picture(),
+			this.fightConfig.hero().fallback().powers()
+		);
+	}
+
+	/**
+	 * Method used only to 
+	 * @return
+	 */
+	private Hero createFallbackUnbreakableHero() {
+		return new Hero(
+			"MAD Super Hero",
+			1200000000,
 			this.fightConfig.hero().fallback().picture(),
 			this.fightConfig.hero().fallback().powers()
 		);
@@ -265,4 +285,6 @@ public class FightService {
 		fight.loserTeam = this.fightConfig.hero().teamName();
 		return fight;
 	}
+
+
 }
